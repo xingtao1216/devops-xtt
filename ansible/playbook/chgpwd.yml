@@ -1,0 +1,8 @@
+---
+- hosts: devops-others
+  gather_facts: false
+  tasks:
+  - name: Change user password
+    user: name={{ item.name }} password={{ item.chpass | password_hash('sha512') }} update_password=always
+    with_items:
+        - { name: 'root',chpass: 'DevOps@2024#!@' }

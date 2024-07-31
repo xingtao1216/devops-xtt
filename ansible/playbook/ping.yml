@@ -1,0 +1,9 @@
+- name: Test connection to remote host  
+  hosts: idc-slave
+  vars:
+    ansible_user: root
+    ansible_password: DevOps@2024#!@
+  tasks:  
+    - name: Ping remote host  
+      ping:
+

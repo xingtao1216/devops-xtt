@@ -1,0 +1,10 @@
+---  
+- name: Deploy node_exporter  
+  hosts: devops-k8s
+
+  tasks:
+    - name: copy node_exporter
+      unarchive:
+        src: /etc/ansible/file/node_exporter-1.5.0.linux-amd64.tar.gz
+        dest: /opt/
+        copy=yes

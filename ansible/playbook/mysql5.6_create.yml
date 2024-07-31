@@ -1,0 +1,47 @@
+---
+- hosts: mysql-server
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+    mysql_root_password: Kylin@0628
+  tasks:
+  - name: Create databases
+    mysql_db:
+      login_host: localhost
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      name: "{{ item }}"
+      encoding: "utf8"
+      state: present
+    tags: mysql
+    with_items:
+      - scm
+      - amon
+      - rman
+      - metastore
+      - nav
+      - navms
+
+  - name: Create database users
+    no_log: true
+    mysql_user:
+      name: "{{ item.name }}"
+      password: "{{ item.password }}"
+      login_host: "localhost"
+      login_port: "3306"
+      login_user: "root"
+      login_password: "{{ mysql_root_password }}"
+      host: '%'
+      priv: "{{ item.privileges }}"
+      state: present
+    tags: mysql
+    with_items:
+      - { name: scm, password: Kyligence2023, privileges: 'scm.*:ALL' }
+      - { name: amon, password: Kyligence2023, privileges: 'amon.*:ALL' }
+      - { name: rman, password: Kyligence2023, privileges: 'rman.*:ALL' }
+      - { name: hive, password: Kyligence2023, privileges: 'metastore.*:ALL' }
+      - { name: nav, password: Kyligence2023, privileges: 'nav.*:ALL' }
+      - { name: navms, password: Kyligence2023, privileges: 'navms.*:ALL' }
+
+ 

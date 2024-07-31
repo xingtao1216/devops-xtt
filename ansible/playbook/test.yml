@@ -1,0 +1,20 @@
+---
+- hosts: reset-server
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+  tasks:
+  - name: Installing the MySQL JDBC Driver
+    copy:
+      src: ./config/mysql-connector-java-5.1.46.tar.gz
+      dest: /usr/local/src
+  - name: Installing the MySQL JDBC Driver Step
+    shell:
+      cmd: |
+        cd /usr/local/src
+        tar xf mysql-connector-java-5.1.46.tar.gz
+        mkdir -p /usr/share/java/
+        cd mysql-connector-java-5.1.46
+        cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
+ 

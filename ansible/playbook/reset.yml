@@ -1,0 +1,80 @@
+---
+- hosts: reset-server
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+  tasks:
+  - name: Disable Firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+  - name: Disable Selinux
+    replace:
+        path: /etc/selinux/config
+        regexp: 'SELINUX=(enforcing|permissive)'
+        replace: 'SELINUX=disabled'
+
+  - name: Copy Hosts Config
+    copy:
+      src: ./config/cdp716-hosts
+      dest: /etc/hosts
+
+  - name: Update Base Repo
+    shell:
+      cmd: |
+        cd /etc/yum.repos.d/
+        mkdir bak
+        mv CentOS-* bak/
+        curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+        sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo
+  - name: Remove Chrony
+    yum:
+      name: chrony
+      state: absent
+
+  - name: Ntp service
+    yum:
+      name: ntp
+      state: present
+
+  - name: Copy Ntp Config
+    copy:
+      src: ./config/ntp.conf
+      dest: /etc/ntp.conf
+  - name: Enable Ntp
+    systemd:
+      name: ntpd
+      state: started
+      enabled: yes
+
+  - name: Change Zone
+    shell: timedatectl set-timezone Asia/Shanghai
+
+  - name: disable swap
+    shell: echo 0 >/proc/sys/vm/swappiness && echo "vm.swappiness = 0" >> /etc/sysctl.conf
+
+  - name: HugePages
+    shell: echo never > /sys/kernel/mm/transparent_hugepage/defrag && echo never > /sys/kernel/mm/transparent_hugepage/enabled
+
+  - name: Enable  HugePages
+    copy:
+      src: ./config/rc.local
+      dest: /etc/rc.d/rc.local
+
+  - name: Add Permissions
+    shell: chmod +x /etc/rc.d/rc.local
+
+  - name: Add Repo
+    copy:
+      src: ./config/cloudera-manager7.3.1.repo 
+      dest: /etc/yum.repos.d/cloudera-manager7.3.1.repo
+  - name: Install Jdk
+    yum:
+      name: java-1.8.0-openjdk-devel
+      state: present
+  - name: Reboot
+    shell: reboot
+

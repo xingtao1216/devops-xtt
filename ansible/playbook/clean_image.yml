@@ -1,0 +1,10 @@
+---
+- hosts: dev-cluster 
+  gather_facts: false
+  tasks:
+  - name: Clean Images
+    cron:
+      name: "Clean Images"
+      minute: "58"
+      hour: "23"
+      job: "echo y | docker system prune"

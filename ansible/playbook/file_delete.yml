@@ -1,0 +1,13 @@
+---
+- hosts: idc-slave
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: DevOps@2024#!@
+  tasks:
+  - name: Delete Krb1001
+    file:
+      path: /tmp/krb5cc_1001
+      state: absent 
+
+

@@ -1,0 +1,3 @@
+---
+- import_playbook: ./yml/mysql5.6_install.yml
+- import_playbook: ./yml/mysql5.6_create.yml

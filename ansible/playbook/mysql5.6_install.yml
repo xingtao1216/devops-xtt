@@ -1,0 +1,84 @@
+---
+- hosts: mysql-server
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+    mysql_root_password: Kylin@0628
+  tasks:
+  - name: Install MySQL-python and wget
+    yum:
+      name: "{{ item }}"
+      state: installed
+    loop:
+      - MySQL-python
+      - wget
+    tags: install
+      
+  - name: Add Mysql Repo
+    shell: 
+      cmd: |
+        cd /usr/local/src 
+        wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+        rpm -ivh mysql-community-release-el7-5.noarch.rpm
+  - name: Install Mysql
+    yum:
+      name: mysql-server
+      state: present
+
+  
+  - name: Enable Mysql
+    systemd:
+      name: mysqld
+      state: started
+      enabled: yes
+    tags: up
+    notify:
+      - remove_user 
+      - remove_test
+      - set_password 
+
+  - name: Copy my.cnf
+    copy:
+      src: ./config/my.cnf
+      dest: /etc/my.cnf
+      backup: yes
+    notify:
+      - restart_mysql
+
+  - name: Installing the MySQL JDBC Driver
+    copy:
+      src: ./config/mysql-connector-java-5.1.46.tar.gz
+      dest: /usr/local/src
+  - name: Installing the MySQL JDBC Driver Step
+    shell:
+      cmd: |
+        cd /usr/local/src
+        tar xf mysql-connector-java-5.1.46.tar.gz
+        mkdir -p /usr/share/java/
+        cd mysql-connector-java-5.1.46
+        cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
+
+  handlers:
+    - name: remove_user
+      no_log: true
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+
+    - name: remove_test 
+      mysql_db: 
+        name: test
+        state: absent
+
+    - name: set_password
+      no_log: true
+      mysql_user:
+        name: root
+        password: 'Kylin@0628'   
+ 
+    - name: restart_mysql
+      systemd: 
+        name: mysqld
+        state: restarted

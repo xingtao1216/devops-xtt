@@ -1,0 +1,83 @@
+---
+- hosts: pg-server
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+    postgres_password: Kyligence2023
+  tasks:
+  - name: Install python3-psycopg2 and wget
+    yum:
+      name: "{{ item }}"
+      state: installed
+    loop:
+      - python3-psycopg2
+      - wget
+ 
+  - name: Install PG-12
+    shell: 
+      cmd: |
+        cd /usr/local/src 
+        wget https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+        yum install pgdg-redhat-repo-latest.noarch.rpm -y
+        yum install -y postgresql12-server
+        /usr/pgsql-12/bin/postgresql-12-setup initdb
+   
+  - name: Start and enable Pg
+    systemd:
+      name: postgresql-12
+      state: started
+      enabled: yes
+    tags: up
+
+  - name: Setup Passwd
+    shell: psql -d postgres -c 'ALTER USER postgres WITH PASSWORD 'Kyligence2023';'
+
+  - name: Copy PG Config
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      backup: yes
+    with_items:
+      - {src: "./config/pg_hba.conf",dest: "/var/lib/pgsql/12/data/pg_hba.conf"}
+      - {src: "./config/postgresql.conf",dest: "/var/lib/pgsql/12/data/postgresql.conf"}
+
+  - name: restart_pg
+    systemd:
+      name: postgresql-12
+      state: restarted
+
+  - name: Create  User
+    postgresql_user:
+      state: present
+      name: "{{ item  }}"
+      password: "{{ postgres_password }}"
+    become: yes
+    become_user: postgres
+    with_items:
+      - ranger
+      - ranger_rms
+
+  - name: Create Database
+    postgresql_db:
+      state: present
+      name: "{{ item }}"
+    become: yes
+    become_user: postgres
+    with_items:
+      - ranger
+      - ranger_rms
+
+  - name: Grant Access
+    postgresql_privs:
+      type: database
+      database: "{{ item.db_name }}"
+      roles: "{{ item.db_user }}"
+      grant_option: no
+      privs: all
+    become: yes
+    become_user: postgres
+    with_items:
+      - { db_user: ranger, db_name: ranger }
+      - { db_user: ranger_rms, db_name: ranger_rms }
+    
