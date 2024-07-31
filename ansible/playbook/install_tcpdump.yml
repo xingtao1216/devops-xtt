@@ -1,0 +1,15 @@
+---
+- hosts: idc-slave
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: DevOps@2024#!@
+  tasks:
+  - name: Copy Krb
+    copy:
+      src: ./config/krb5cc_1001 
+      dest: /tmp/
+      owner: quard
+      group: quard
+
+

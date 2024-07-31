@@ -1,0 +1,7 @@
+- name: Check Java Version
+  hosts: test
+  #gather_facts: true
+  
+  tasks:
+  - name: Check Java version
+    shell: java -version

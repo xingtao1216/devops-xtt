@@ -1,0 +1,6 @@
+---
+- hosts: cdp-716
+  gather_facts: false
+  tasks:
+  - name: sendkey
+    shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmKH57d5i3oSj4rqfvpByTeKI0hmS9mPhE3IesTPIEG78WJ4TZVhEwseFAq//XN7GOjeY7ZcEWfb8Kh4ws4eC/QIZv5+k45Cr8SaF61VqYgxXFlWt4wzr7nkuesoSNZ83SCswmvdjZRrFxDKWf37rPFjLdaJoWYLJHL3U5nUPDZfe1TqnSEWSGg2LCcOI1j4OA9cBpSzl3+ihrYGaLfZGc8cqq1IRzd+qcVJt/p3cQQRse3+/OsyLVQJRQ2AQDaWInQ/PHD09VvjdUBk8i87F9xdnucLgcB4KmmnJWw8gpA0e+1LLlHTyuVlNN38d1TK8o23UcozPF5/uE3+de9UZr" >> /root/.ssh/authorized_keys 

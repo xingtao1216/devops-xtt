@@ -1,0 +1,8 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+10.1.8.10 cdp716-cm.kylin.com       cdp716-cm 
+10.1.8.11 cdp716-master01.kylin.com cdp716-master01
+10.1.8.12 cdp716-slave01.kylin.com  cdp716-slave01
+10.1.8.13 cdp716-slave02.kylin.com  cdp716-slave02
+10.1.8.14 cdp716-slave03.kylin.com  cdp716-slave03
+10.1.8.15 cdp716-gw01.kylin.com     cdp716-gw01
