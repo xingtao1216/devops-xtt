@@ -1,0 +1,11 @@
+bind 0.0.0.0
+port 6379
+daemonize yes
+pidfile "/opt/redis-cluster/redis_6379/run/redis_6379.pid"
+logfile "/opt/redis-cluster/redis_6379/logs/redis.log"
+dir "/opt/redis-cluster/redis_6379/data"
+appendonly yes
+appendfilename "appendonly.aof"
+cluster-enabled yes
+cluster-config-file "/opt/redis-cluster/redis_6379/conf/nodes.conf"
+cluster-node-timeout 15000
