@@ -1,0 +1,23 @@
+---
+- hosts: influxdb
+  gather_facts: true
+  vars:
+    ansible_user: root
+    ansible_password: hadoop
+  tasks:
+  - name: Add Influxdb Repo
+    copy:
+      src: ./config/influxdb.repo
+      dest: /etc/yum.repos.d/
+      
+  - name: Install Influxdb
+    yum:
+      name: influxdb
+      state: present
+      disable_gpg_check: yes
+
+  - name: Enable Influxdb
+    systemd:
+      name: influxdb
+      state: started
+      enabled: yes
