@@ -38,7 +38,6 @@ spec:
                                 sh '''
                                 for i in `seq 2`;do
                                 curl -I http://repo-ofs.kyligence.com
-                                sleep 2
                                 done
                                 '''
                             }
