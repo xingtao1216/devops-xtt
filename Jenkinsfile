@@ -26,7 +26,7 @@ spec:
                     steps {
                         container('jnlp') {
                             timestamps {
-                                checkout([$class: 'GitSCM', branches: [[name: '*/xtt-devops']], extensions: [], userRemoteConfigs: [[credentialsId: 'devops-xtttest', url: 'https://github.com/xingtao1216/devops-xtt.git']]])
+                                checkout([$class: 'GitSCM', branches: [[name: '*/xtt-devops']], extensions: [], userRemoteConfigs: [[credentialsId: 'devops-xtttest', url: 'https://github-proxy.kyligence.com/xingtao1216/devops-xtt.git']]])
                             }
                         }
                     }
