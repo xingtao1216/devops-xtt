@@ -1,0 +1,38 @@
+services:
+   namenode:
+      image: apache/hadoop:3.3.5
+      hostname: namenode
+      container_name: namenode
+      command: ["hdfs", "namenode"]
+      user: "root:root"
+      ports:
+        - 9870:9870
+        - 8020:8020
+      volumes:
+        - ./data/nn:/tmp/hadoop-root/dfs
+      env_file:
+        - ./config.env
+      privileged: true
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+      networks:
+        - hadoop-net
+   datanode:
+      image: apache/hadoop:3.3.5
+      hostname: datanode
+      container_name: datanode
+      command: ["hdfs", "datanode"]
+      user: "root:root"
+      env_file:
+        - ./config.env
+      privileged: true
+      ports:
+        - 9864:9864
+        - 9866:9866
+      volumes:
+        - ./data/dn:/tmp/hadoop-root/dfs
+      networks:
+        - hadoop-net
+networks:
+   hadoop-net:
+      driver: bridge
