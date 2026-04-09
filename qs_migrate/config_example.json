@@ -1,0 +1,17 @@
+{
+  "datasource_credentials": {
+    "YOUR_DATASOURCE_ID_1": {
+      "credential_type": "CREDENTIAL_PAIR",
+      "username": "your_username",
+      "password": "your_password"
+    },
+    "YOUR_DATASOURCE_ID_2": {
+      "credential_type": "CREDENTIAL_PAIR",
+      "username": "your_username",
+      "password": "your_password"
+    }
+  },
+  "vpc_connections": {
+    "source-vpc-connection-id": "target-vpc-connection-arn"
+  }
+}
