@@ -1,0 +1,21 @@
+# 敏感配置文件
+config.json
+*.env
+
+# 迁移工作目录
+migrate_work_*/
+
+# 日志文件
+*.log
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 依赖导出文件
+*dependencies.xlsx
+
+# 临时文件
+*.tmp
+*.bak

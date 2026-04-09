@@ -16,7 +16,7 @@ from qs_common import log, ResourceResolver
 
 def add_common_args(p):
     p.add_argument("--account-id", required=True, help="AWS 账号 ID")
-    p.add_argument("--region", required=True, help="区域，如 eu-central-1")
+    p.add_argument("--region", required=True, help="区域，如 us-west-2")
 
 
 def add_resource_args(p):

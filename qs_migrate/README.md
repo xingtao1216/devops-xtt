@@ -50,35 +50,35 @@ python qs_migrate.py migrate \
 ```bash
 # 迁移 Dashboard（自动打包全链路依赖）
 python qs_migrate.py migrate \
-  --account-id 123456789123 \
-  --source-region eu-central-1 \
-  --target-region us-east-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --source-region SOURCE_REGION \
+  --target-region TARGET_REGION \
   --resource-type dashboard \
-  --resources "032b992e-1a74-4f3c-936a-da06d7e9398f" "05be3b26-19bf-4482-adc1-16209d525476"
+  --resources "dashboard-id-1" "dashboard-id-2"
 
 # 迁移 Analysis（含 DataSet + DataSource）
 python qs_migrate.py migrate \
-  --account-id 123456789123 \
-  --source-region eu-central-1 \
-  --target-region us-east-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --source-region SOURCE_REGION \
+  --target-region TARGET_REGION \
   --resource-type analysis \
-  --resources "my-analysis-id"
+  --resources "analysis-id"
 
 # 按名称迁移 DataSet（含 DataSource）
 python qs_migrate.py migrate \
-  --account-id 123456789123 \
-  --source-region eu-central-1 \
-  --target-region us-east-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --source-region SOURCE_REGION \
+  --target-region TARGET_REGION \
   --resource-type dataset \
-  --resources "phone_activations_with_no_sell_in"
+  --resources "your_dataset_name"
 
 # 带配置文件迁移 DataSource
 python qs_migrate.py migrate \
-  --account-id 123456789123 \
-  --source-region eu-central-1 \
-  --target-region us-east-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --source-region SOURCE_REGION \
+  --target-region TARGET_REGION \
   --resource-type datasource \
-  --resources "02959bb4-b950-4db9-b355-6c2d7d27d61f" \
+  --resources "datasource-id" \
   --config config_example.json
 ```
 
@@ -109,40 +109,40 @@ python qs_migrate.py info \
 ```bash
 # 查询 Dashboard 信息（含关联的 Analysis、DataSet、DataSource）
 python qs_migrate.py info \
-  --account-id 123456789123 \
-  --region eu-central-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --region SOURCE_REGION \
   --resource-type dashboard \
-  --resources "032b992e-1a74-4f3c-936a-da06d7e9398f"
+  --resources "dashboard-id"
 
 # 批量查询多个 DataSet
 python qs_migrate.py info \
-  --account-id 123456789123 \
-  --region eu-central-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --region SOURCE_REGION \
   --resource-type dataset \
   --resources "dataset-id-1" "dataset-id-2"
 
 # 查询 DataSource 信息
 python qs_migrate.py info \
-  --account-id 123456789123 \
-  --region eu-central-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --region SOURCE_REGION \
   --resource-type datasource \
-  --resources "02959bb4-b950-4db9-b355-6c2d7d27d61f"
+  --resources "datasource-id"
 ```
 
 ### 输出示例
 
 ```
 ============================================================
-📊 Dashboard: phone activations_with_no_sell_in
-   ID:  032b992e-1a74-4f3c-936a-da06d7e9398f
-   ARN: arn:aws:quicksight:eu-central-1:123456789123:dashboard/032b992e...
+📊 Dashboard: Sample Dashboard Name
+   ID:  dashboard-id
+   ARN: arn:aws:quicksight:SOURCE_REGION:YOUR_AWS_ACCOUNT_ID:dashboard/dashboard-id...
 
    📈 关联 Analysis:
-      phone activations analysis (abc123...)
+      Sample Analysis Name (analysis-id...)
 
    📦 关联 DataSet (1):
-      phone_activations_with_no_sell_in (def456...)
-        └─ DataSource: main_account_redshift (02959bb4...)
+      sample_dataset_name (dataset-id...)
+        └─ DataSource: sample_datasource_name (datasource-id...)
 ```
 
 如果某个依赖不存在，会显示"无"。
@@ -179,16 +179,16 @@ python qs_migrate.py deps \
 ```bash
 # 导出整个区域的全量依赖关系
 python qs_migrate.py deps \
-  --account-id 123456789123 \
-  --region eu-central-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --region SOURCE_REGION \
   --output all_dependencies.xlsx
 
 # 仅导出指定 Dashboard 的依赖关系
 python qs_migrate.py deps \
-  --account-id 123456789123 \
-  --region eu-central-1 \
+  --account-id YOUR_AWS_ACCOUNT_ID \
+  --region SOURCE_REGION \
   --resource-type dashboard \
-  --resources "032b992e-1a74-4f3c-936a-da06d7e9398f" \
+  --resources "dashboard-id" \
   --output dashboard_deps.xlsx
 ```
 
