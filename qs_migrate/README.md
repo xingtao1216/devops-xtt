@@ -50,7 +50,7 @@ python qs_migrate.py migrate \
 ```bash
 # 迁移 Dashboard（自动打包全链路依赖）
 python qs_migrate.py migrate \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --source-region eu-central-1 \
   --target-region us-east-1 \
   --resource-type dashboard \
@@ -58,7 +58,7 @@ python qs_migrate.py migrate \
 
 # 迁移 Analysis（含 DataSet + DataSource）
 python qs_migrate.py migrate \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --source-region eu-central-1 \
   --target-region us-east-1 \
   --resource-type analysis \
@@ -66,7 +66,7 @@ python qs_migrate.py migrate \
 
 # 按名称迁移 DataSet（含 DataSource）
 python qs_migrate.py migrate \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --source-region eu-central-1 \
   --target-region us-east-1 \
   --resource-type dataset \
@@ -74,7 +74,7 @@ python qs_migrate.py migrate \
 
 # 带配置文件迁移 DataSource
 python qs_migrate.py migrate \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --source-region eu-central-1 \
   --target-region us-east-1 \
   --resource-type datasource \
@@ -109,21 +109,21 @@ python qs_migrate.py info \
 ```bash
 # 查询 Dashboard 信息（含关联的 Analysis、DataSet、DataSource）
 python qs_migrate.py info \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --region eu-central-1 \
   --resource-type dashboard \
   --resources "032b992e-1a74-4f3c-936a-da06d7e9398f"
 
 # 批量查询多个 DataSet
 python qs_migrate.py info \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --region eu-central-1 \
   --resource-type dataset \
   --resources "dataset-id-1" "dataset-id-2"
 
 # 查询 DataSource 信息
 python qs_migrate.py info \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --region eu-central-1 \
   --resource-type datasource \
   --resources "02959bb4-b950-4db9-b355-6c2d7d27d61f"
@@ -135,7 +135,7 @@ python qs_migrate.py info \
 ============================================================
 📊 Dashboard: phone activations_with_no_sell_in
    ID:  032b992e-1a74-4f3c-936a-da06d7e9398f
-   ARN: arn:aws:quicksight:eu-central-1:523510268597:dashboard/032b992e...
+   ARN: arn:aws:quicksight:eu-central-1:123456789123:dashboard/032b992e...
 
    📈 关联 Analysis:
       phone activations analysis (abc123...)
@@ -179,13 +179,13 @@ python qs_migrate.py deps \
 ```bash
 # 导出整个区域的全量依赖关系
 python qs_migrate.py deps \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --region eu-central-1 \
   --output all_dependencies.xlsx
 
 # 仅导出指定 Dashboard 的依赖关系
 python qs_migrate.py deps \
-  --account-id 523510268597 \
+  --account-id 123456789123 \
   --region eu-central-1 \
   --resource-type dashboard \
   --resources "032b992e-1a74-4f3c-936a-da06d7e9398f" \
