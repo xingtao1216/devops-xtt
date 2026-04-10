@@ -1,17 +1,16 @@
 {
   "datasource_credentials": {
-    "YOUR_DATASOURCE_ID_1": {
-      "credential_type": "CREDENTIAL_PAIR",
-      "username": "your_username",
-      "password": "your_password"
-    },
-    "YOUR_DATASOURCE_ID_2": {
+    "source-datasource-id": {
       "credential_type": "CREDENTIAL_PAIR",
       "username": "your_username",
       "password": "your_password"
     }
   },
   "vpc_connections": {
-    "source-vpc-connection-id": "target-vpc-connection-arn"
+    "source-vpc-connection-id": {
+      "SubnetIds": ["subnet-aaaa1111", "subnet-bbbb2222"],
+      "SecurityGroupIds": ["sg-cccc3333"],
+      "RoleArn": "arn:aws:iam::123456789012:role/your_quicksight_role"
+    }
   }
 }

@@ -74,7 +74,7 @@ class Migrator:
             if ds_list:
                 override["DataSources"] = ds_list
         if vpc_map:
-            override["VPCConnections"] = [{"VPCConnectionId": sid} for sid in vpc_map]
+            override["VPCConnections"] = [{"VPCConnectionId": vid, **props} if isinstance(props, dict) else {"VPCConnectionId": props.rsplit("/", 1)[-1]} for vid, props in vpc_map.items()]
         return override or None
 
     def import_bundle(self, bundle_path, job_id, override):
