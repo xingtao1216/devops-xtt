@@ -63,16 +63,19 @@ class Migrator:
     def build_override(self):
         override = {}
         ds_creds = self.config.get("datasource_credentials", {})
+        ds_params = self.config.get("datasource_parameters", {})
         vpc_map = self.config.get("vpc_connections", {})
-        if ds_creds:
-            ds_list = []
+        if ds_creds or ds_params:
+            ds_map = {}
             for ds_id, cred in ds_creds.items():
-                entry = {"DataSourceId": ds_id}
+                entry = ds_map.setdefault(ds_id, {"DataSourceId": ds_id})
                 if cred.get("credential_type") == "CREDENTIAL_PAIR":
                     entry["Credentials"] = {"CredentialPair": {"Username": cred["username"], "Password": cred["password"]}}
-                ds_list.append(entry)
-            if ds_list:
-                override["DataSources"] = ds_list
+            for ds_id, params in ds_params.items():
+                entry = ds_map.setdefault(ds_id, {"DataSourceId": ds_id})
+                entry["DataSourceParameters"] = params
+            if ds_map:
+                override["DataSources"] = list(ds_map.values())
         if vpc_map:
             override["VPCConnections"] = [{"VPCConnectionId": vid, **props} if isinstance(props, dict) else {"VPCConnectionId": props.rsplit("/", 1)[-1]} for vid, props in vpc_map.items()]
         return override or None

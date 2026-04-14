@@ -6,6 +6,15 @@
       "password": "your_password"
     }
   },
+  "datasource_parameters": {
+    "source-datasource-id": {
+      "RedshiftParameters": {
+        "Host": "your-redshift-host.region.redshift.amazonaws.com",
+        "Port": 5439,
+        "Database": "your_database"
+      }
+    }
+  },
   "vpc_connections": {
     "source-vpc-connection-id": {
       "SubnetIds": ["subnet-aaaa1111", "subnet-bbbb2222"],
